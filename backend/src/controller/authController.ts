@@ -4,6 +4,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 import { signupSchema,loginSchema } from "../validation/validation";
+import cloudinary from "../utils/cludinary.config";
 
 dotenv.config()
 
@@ -117,7 +118,7 @@ export const checkAuth = async(req:Request,res:Response)=>{
            user: {...response,
                 password:null} 
         })
-        
+
     }else{
         res.status(404).json({
             message:"user not found !!"
@@ -129,4 +130,39 @@ export const checkAuth = async(req:Request,res:Response)=>{
             message :`error in checkAuth Controller is ${e}`
         })
     }
+}
+
+export const updateProfile = async (req :Request,res :Response)=>{
+     
+    try{
+        const {profileImage} = req.body
+        if(!profileImage){
+           res.status(401).json({
+                message:"unable to upload the image "
+            })
+            return
+        }
+        const userId = req.userId
+
+        const response= await cloudinary.uploader.upload(profileImage)
+       const updatedUser = await client.user.update({
+                    where: {
+                        Id: Number(userId), 
+                    },
+                    data: {
+                        Image: response.secure_url, 
+                    },
+                    });
+                    res.status(201).json({
+                        message:"user updated " ,
+                        user:{...updatedUser,
+                            password:null
+                        }
+                    })
+                    
+        }catch{
+            res.status(401).json({
+                message:"unable to upload the image "
+            })
+               }
 }
