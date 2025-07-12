@@ -6,7 +6,7 @@ Develop ReWear, a web-based platform that enables users to exchange unused cloth
 through direct swaps or a point-based redemption system. The goal is to promote sustainable
 fashion and reduce"
 
-demo_URl=""
+demo_URl="https://www.youtube.com/watch?v=EL_L0buJL9I&ab_channel=Cratyedits"
 
 📱 Complete Page Structure
 
