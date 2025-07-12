@@ -99,3 +99,34 @@ export const signin = async (req:Request,res:Response)=>{
         })
     }
 }
+
+
+export const checkAuth = async(req:Request,res:Response)=>{
+    try{
+        
+        const Id = Number(req.userId)
+        
+        const response = await client.user.findUnique({
+            where:{
+                Id
+            }
+        })
+        
+        if(response){
+        res.json({
+           user: {...response,
+                password:null} 
+        })
+        
+    }else{
+        res.status(404).json({
+            message:"user not found !!"
+        })
+    }
+
+    }catch(e){
+        res.json({
+            message :`error in checkAuth Controller is ${e}`
+        })
+    }
+}
