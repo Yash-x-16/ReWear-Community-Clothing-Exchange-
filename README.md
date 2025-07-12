@@ -1,5 +1,5 @@
 # ReWear-Community-Clothing-Exchange-
-interact
+
 📱 Complete Page Structure
 
 Home Page: Hero slideshow, categories, featured products
