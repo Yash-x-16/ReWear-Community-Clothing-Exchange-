@@ -19,7 +19,7 @@ dotenv_1.default.config();
 const JWT_SECRET = process.env.JWT_SECRET;
 const Middleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const token = req.headers["authorization"];
+        const token = req.headers["token"];
         const decoded = jsonwebtoken_1.default.verify(token, JWT_SECRET);
         if (typeof decoded === "object" && "id" in decoded) {
             req.userId = decoded.id;

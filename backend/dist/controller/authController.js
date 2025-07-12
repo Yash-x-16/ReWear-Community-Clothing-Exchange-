@@ -12,12 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkAuth = exports.signin = exports.signup = void 0;
+exports.updateProfile = exports.checkAuth = exports.signin = exports.signup = void 0;
 const db_1 = require("../db/db");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const validation_1 = require("../validation/validation");
+const cludinary_config_1 = __importDefault(require("../utils/cludinary.config"));
 dotenv_1.default.config();
 const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = validation_1.signupSchema.safeParse(req.body);
@@ -124,3 +125,35 @@ const checkAuth = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.checkAuth = checkAuth;
+const updateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { profileImage } = req.body;
+        if (!profileImage) {
+            res.status(401).json({
+                message: "unable to upload the image hhh"
+            });
+            return;
+        }
+        const userId = req.userId;
+        const response = yield cludinary_config_1.default.uploader.upload(profileImage);
+        console.log(response);
+        const updatedUser = yield db_1.client.user.update({
+            where: {
+                Id: Number(userId),
+            },
+            data: {
+                Image: response.secure_url,
+            },
+        });
+        res.status(201).json({
+            message: "user updated ",
+            user: Object.assign(Object.assign({}, updatedUser), { password: null })
+        });
+    }
+    catch (e) {
+        res.status(401).json({
+            message: `error in the updateProfile function is : ${e} `
+        });
+    }
+});
+exports.updateProfile = updateProfile;

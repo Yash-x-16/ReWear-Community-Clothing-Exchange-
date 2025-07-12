@@ -31,4 +31,10 @@ model Item{
   Image           String 
   userId          Int
   user            User           @relation(fields: [userId],references: [Id])
+} 
+
+
+model itemImages{
+  id    Int     @default(autoincrement())@unique
+
 }

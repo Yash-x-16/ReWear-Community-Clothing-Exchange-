@@ -7,5 +7,4 @@ const router  = express.Router()
 router.post('/signup',signup)
 router.post('/signin',signin)
 router.get('/checkAuth',Middleware,checkAuth)
-
 export default router;

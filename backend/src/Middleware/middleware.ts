@@ -8,7 +8,7 @@ dotenv.config()
 const JWT_SECRET = process.env.JWT_SECRET
 export const Middleware = async(req:Request,res:Response,next:NextFunction)=>{
     try{
-        const token = req.headers["authorization"]
+        const token = req.headers["token"]
         const decoded = jwt.verify(token as string, JWT_SECRET as string);
 
         if (typeof decoded === "object" && "id" in decoded) {

@@ -136,15 +136,17 @@ export const updateProfile = async (req :Request,res :Response)=>{
      
     try{
         const {profileImage} = req.body
+        
         if(!profileImage){
            res.status(401).json({
-                message:"unable to upload the image "
+                message:"unable to upload the image hhh"
             })
             return
         }
         const userId = req.userId
 
         const response= await cloudinary.uploader.upload(profileImage)
+        
        const updatedUser = await client.user.update({
                     where: {
                         Id: Number(userId), 
@@ -159,10 +161,10 @@ export const updateProfile = async (req :Request,res :Response)=>{
                             password:null
                         }
                     })
-                    
-        }catch{
+
+        }catch(e){
             res.status(401).json({
-                message:"unable to upload the image "
+                message:`error in the updateProfile function is : ${e} `
             })
                }
 }
