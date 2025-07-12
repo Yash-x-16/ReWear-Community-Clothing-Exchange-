@@ -52,6 +52,9 @@ export interface AuthResponse {
   user?: User;
 }
 
+// Dummy export to ensure module is recognized by bundler
+export const __ = {};
+
 export interface CreateItemData {
   title: string;
   description: string;
