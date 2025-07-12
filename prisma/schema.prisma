@@ -1,0 +1,30 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  name      String
+  email     String  @unique
+  password  String
+  status    String  @default("active") // active or suspended
+  role      String  @default("user")   // admin or user
+
+  items     Item[]  @relation("UserItems")
+}
+
+model Item {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String
+  status      String  @default("pending") // pending, approved, rejected
+  userId      Int
+  uploader    User    @relation("UserItems", fields: [userId], references: [id])
+}
