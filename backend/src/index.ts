@@ -1,1 +1,3 @@
-console.log("radhe radhe !!!")
+import { PrismaClient } from "../generated/prisma";
+
+const client = new PrismaClient()
