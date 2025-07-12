@@ -21,7 +21,6 @@ model User{
   email           String            @unique 
   password        String 
   Image           String?  
-  itemId          Int
   item            Item[]
 }
 
